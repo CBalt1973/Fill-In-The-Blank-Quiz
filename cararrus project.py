@@ -67,31 +67,32 @@ def display_filled_paragraph(level, position):
     paragraphs[level] = paragraphs[level].replace(blanks[replacement_position-1], answers[level][replacement_position-1])
     replacement_position += 1
   print(paragraphs[level])
- 
-def quiz(level, attempts):
-  #Inputs:  Runs the quiz
-  #Outputs:  
+
+# Runs the quizzes and outputs the following given guesses  
+def quiz(level, attempts):  
   print "Begin the quiz:\n" + str(paragraphs[level])
   guesses = 1
-  attempts = 5
-  while guesses < attempts:
+  while guesses <= attempts: # removed attempts = 5
     response = raw_input("\nWhat is answer " + str(guesses) + "?\n").lower()
     if response == answers[level][guesses - 1]:
-      print "You are correct!\n"
-      display_filled_paragraph(level, guesses)
+      correct("You are correct!\n", level, guesses) 
       guesses = guesses + 1
     else:
       while response != answers[level][guesses-1]:
         print "Please try again\n"
         response = raw_input("What is answer " + str(guesses) + "?\n").lower()
         if response == answers[level][guesses - 1]:
-          print "You are correct!\n"
-          display_filled_paragraph(level, guesses)
+          correct("You are correct!\n", level, guesses)
         elif guesses > attempts:
           print "The correct answer is " + str(answers[level][guesses-1])
           response = answers[level][guesses-1]
-      guesses = guesses + 1
- 
+        guesses = guesses + 1 # changed indentation here so that it's actually incrementing in while loop
+
+def correct(message, level, guesses):
+   print message
+   display_filled_paragraph(level, guesses)
+   return
+  
 def play_game():
   #Input:
       #user inputs level of game and number of attempts desired
